@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Життя</title>
+    <style>
+        /* Нова палітра кольорів: Синій та Світло-гірчичний */
+        :root {
+            --primary-blue: #1e3a8a; /* Глибокий синій */
+            --accent-mustard: #eab308; /* Світло-гірчичний / Жовтий */
+            --light-blue: #eff6ff;
+            --text-dark: #1e293b;
+            --text-light: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-blue);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Анімації */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(234, 179, 8, 0.9); transform: scale(1.02); }
+            100% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.5); }
+        }
+
+        /* Анімація для стікерів: падають з неба */
+        @keyframes fall {
+            0% { 
+                transform: translateY(0) rotate(0deg); 
+            }
+            100% { 
+                transform: translateY(110vh) rotate(360deg); /* Падають за межі екрану */
+            }
+        }
+
+        .sticker {
+            position: fixed;
+            top: -50px; /* Ховаємо їх вище екрану на старті */
+            pointer-events: none; /* Щоб не заважали клікати */
+            z-index: 9999;
+            font-size: 2rem;
+            animation: fall linear forwards;
+            user-select: none;
+        }
+
+        /* Шапка сайту */
+        header {
+            background: linear-gradient(rgba(30, 58, 138, 0.85), rgba(30, 58, 138, 0.85)), url('https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover fixed;
+            color: var(--text-light);
+            text-align: center;
+            padding: 7rem 2rem;
+            animation: fadeInDown 1s ease-out;
+            border-bottom: 8px solid var(--accent-mustard);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 0 0 1rem 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-mustard);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--light-blue);
+        }
+
+        /* Контейнер карток */
+        .container {
+            max-width: 1200px;
+            margin: -40px auto 3rem;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Дизайн карток */
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(30, 58, 138, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.3s; }
+        .card:nth-child(3) { animation-delay: 0.5s; }
+        .card:nth-child(4) { animation-delay: 0.7s; }
+
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(30, 58, 138, 0.2);
+            border-color: var(--accent-mustard);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.1);
+        }
+
+        .img-container {
+            overflow: hidden;
+        }
+
+        .card-content {
+            padding: 2rem;
+        }
+
+        .card h2 {
+            color: var(--primary-blue);
+            margin-top: 0;
+            font-size: 1.4rem;
+            border-left: 4px solid var(--accent-mustard);
+            padding-left: 10px;
+        }
+
+        .card p {
+            color: #475569;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-blue);
+            color: var(--text-light);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: calc(100% - 40px);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-mustard);
+            color: var(--primary-blue);
+        }
+
+        /* Блок із закликом поставити 12 */
+        .cta-box {
+            background-color: var(--primary-blue);
+            color: var(--text-light);
+            text-align: center;
+            padding: 3rem 2rem;
+            margin: 5rem auto;
+            max-width: 900px;
+            border-radius: 20px;
+            font-size: 1.6rem;
+            border: 4px solid var(--accent-mustard);
+            animation: glow 3s infinite;
+        }
+
+        .cta-box p {
+            margin: 0;
+        }
+
+        .highlight {
+            color: var(--accent-mustard);
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+            margin-top: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Підвал */
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            background-color: var(--primary-blue);
+            color: var(--light-blue);
+            font-size: 0.9rem;
+        }
+
+        footer span {
+            color: var(--accent-mustard);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Життя 2050</h1>
+        <p>Місто майбутнього, де інноваційний урбанізм та смарт-технології існують у повній гармонії з життєдайними силами природи.</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="card">
+            <div class="img-container">
+                <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Органічна архітектура" class="card-img">
+            </div>
+            <div class="card-content">
+                <h2>🌿 Архітектура, що живе</h2>
+                <p>Ми використовуємо <strong>органічну архітектуру</strong>. Будівлі не просто стоять на землі - вони адаптуються до клімату. Фасади створені з біоматеріалів та панелей із мікроводоростей, які фільтрують повітря та виробляють кисень. Хмарочоси мають форму дерев, що мінімізує опір вітру.</p>
+                <a href="#" class="btn">Дослідити біо-фасади</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="img-container">
+                <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Кінетичні доріжки" class="card-img">
+            </div>
+            <div class="card-content">
+                <h2>🚶‍♂️ Енергетичні пішохідні зони</h2>
+                <p>Поверхня міста повністю віддана людям. Галасливий транспорт переміщено у підземні тунелі. Пішохідні вулиці вкриті <strong>кінетичними плитами</strong> — кожен крок мешканця генерує чисту електроенергію для освітлення нічного міста. А дерева, які є майде всюди очіщуть повітря</p>
+                <a href="#" class="btn">Схема смарт-доріжок</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="img-container">
+                <img src="https://images.unsplash.com/photo-1496851473196-e26508c21494?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Зони відпочинку" class="card-img">
+            </div>
+            <div class="card-content">
+                <h2>☕ Простори для людей</h2>
+                <p>Мешканці відпочивають у багаторівневих висячих садах та смарт-парках. Громадські простори обладнані левітуючими лавками та голографічними інтерфейсами для навчання просто неба. Штучні водойми збирають дощову воду для охолодження району в спеку. Місця для відпочинку обладнані подушками, затишними книгами, диванами. Також люди можуть користуватися кухнею, яка є в цих просторах.</p>
+                <a href="#" class="btn">Зазирнути в парки</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="img-container">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Новий Урбанізм" class="card-img">
+            </div>
+            <div class="card-content">
+                <h2>🏗️ Смарт Урбанізм</h2>
+                <p>Район працює як єдиний живий організм. Концепція еволюціонувала у <strong>5-хвилинне місто</strong> завдяки системі ліфтів і мостів між хмарочосами. Штучний інтелект керує потоками води та енергії, роблячи район повністю безвідходним. Люди, які тут живуть радіють, що живуть саме в цьому районі. Через чисте повітря люди менше хворіють, а також мають більше сил, через очіщене повітря та якісну воду</p>
+                <a href="#" class="btn">Запуск симуляції</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="cta-box">
+        <p>Якщо хочете підтримати автора / цей проєкт,</p>
+        <span class="highlight">поставте 12 по СТЕМ! 🏆</span>
+    </div>
+
+    <footer>
+        <p>Проєкт створено для уроку <span>СТЕМ</span>. Майбутнє вже тут.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.btn');
+            
+            // Набори емодзі для кожної картки
+            const emojiSets = [
+                ['🌿', '🍃', '🌱', '💧'], // Архітектура
+                ['🚶‍♂️', '⚡', '🔋', '🟡'], // Доріжки
+                ['☕', '🌳', '💬', '☀️'], // Комунікація
+                ['🏗️', '🤖', '🏙️', '⚙️']  // Урбанізм
+            ];
+
+            buttons.forEach((btn, index) => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    
+                    const emojis = emojiSets[index];
+
+                    // Створюємо 30 стікерів (як у твоєму коді)
+                    for (let i = 0; i < 30; i++) {
+                        const sticker = document.createElement('div');
+                        sticker.classList.add('sticker');
+                        
+                        // Беремо випадковий емодзі з набору для цієї картки
+                        sticker.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                        document.body.appendChild(sticker);
+
+                        // Логіка з твого прикладу: випадкова позиція, тривалість і затримка
+                        const startPos = Math.random() * 100; // Розкид по всій ширині (vw)
+                        const duration = Math.random() * 2 + 3; // Від 3 до 5 секунд
+                        const delay = Math.random() * 2; // Затримка від 0 до 2 секунд
+
+                        sticker.style.left = `${startPos}vw`;
+                        sticker.style.animationDuration = `${duration}s`;
+                        sticker.style.animationDelay = `${delay}s`;
+
+                        // Видаляємо елемент, як тільки він допадає
+                        sticker.addEventListener('animationend', () => sticker.remove());
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+  </html>
